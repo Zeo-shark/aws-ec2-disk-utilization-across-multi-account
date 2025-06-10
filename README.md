@@ -9,12 +9,22 @@ This repository provides a resilient, secure, and scalable solution to monitor d
 
 ![docs\diagrams\cross-account-ec2-monitoring.drawio.png](docs\diagrams\cross-account-ec2-monitoring.drawio.png)
 
-**Highlights:**
-- Centralized AWS account management with AWS Organizations
-- Secure cross-account access using IAM roles
-- Automated disk utilization collection via Ansible playbooks
-- Central metrics storage in an encrypted S3 bucket
-- Visualization support through Amazon QuickSight or Grafana
+## Features
+
+- ✅ **Multi-Account Support** - Monitor across multiple AWS accounts
+- ✅ **Scalable Architecture** - Can scale to thousands of ec2 instances
+- ✅ **Automated Reporting** - Real-time dashboards and alerts
+- ✅ **Security First** - Cross-account roles with least privilege
+- ✅ **Cost Optimized** - Efficient data storage and processing
+- ✅ **Easy Onboarding** - Automated new account integration
+
+## Quick Start
+
+### Prerequisites
+- AWS CLI configured with appropriate permissions
+- Ansible 2.12+ installed
+- Python 3.8+ with boto3
+- Terraform 1.0+ (optional)
 
 ## Repository Structure
 

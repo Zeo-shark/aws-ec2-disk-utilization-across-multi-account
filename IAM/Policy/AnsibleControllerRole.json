@@ -3,7 +3,13 @@
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": "sts:AssumeRole",
+      "Action": [
+        "sts:AssumeRole",
+        "ec2:DescribeInstances",
+        "ssm:SendCommand",
+        "ssm:GetCommandInvocation",
+        "ssm:DescribeInstanceInformation"
+      ],
       "Resource": [
         "arn:aws:iam::<AccountID1>:role/AnsibleDiskMonitorRole",
         "arn:aws:iam::<AccountID2>:role/AnsibleDiskMonitorRole",
