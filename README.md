@@ -33,7 +33,7 @@ This repository provides a resilient, secure, and scalable solution to monitor d
 - Python 3.x
 - AWS CLI
 - SSH access to EC2 instances
-- AWS credentials with appropriate permissions
+- AWS credentials with appropriate permissions [(detailed Guide)](./docs/manual-setup-guide.md)
 
 ## 🔧 Installation
 
@@ -70,7 +70,7 @@ export AWS_ACCOUNT_3_SECRET_KEY="your-secret-key-3"
 
 1. Set up CloudWatch monitoring infrastructure:
 ```bash
-python3 ansible/playbooks/aggregate_results.py
+python3 scripts/setup_monitoring.py
 ```
 
 2. Run the disk utilization playbook:
