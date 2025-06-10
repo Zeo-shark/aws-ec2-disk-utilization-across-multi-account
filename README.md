@@ -94,22 +94,67 @@ The solution provides:
 - SNS notifications for critical events
 - Configurable thresholds
 
-## 🔐 Security
+## 🔐 Security Considerations and Best Practices
 
-- **Credential Management**: Secure storage using environment variables
-- **IAM Best Practices**: Minimal required permissions
-- **SSH Security**: Key-based authentication
-- **Access Control**: Role-based access management
-- **Audit Trail**: CloudWatch logging
+### Credential Management
+- Use AWS Secrets Manager or Parameter Store instead of environment variables
+- Implement automatic credential rotation
+- Use AWS Systems Manager Session Manager instead of direct SSH
+- Implement AWS KMS for encryption at rest
 
-## 📈 Scalability
+### IAM Security
+- Implement resource-level permissions instead of "*"
+- Use AWS Organizations for centralized policy management
+- Add service control policies (SCPs) at organization level
+- Implement IP restrictions for API access
+- Use AWS Config for compliance monitoring
 
-The solution is designed to scale with:
-- Dynamic inventory management
-- Parallel execution across accounts
-- Efficient metric collection
-- Configurable thresholds
-- Easy addition of new accounts
+### Access Control
+- Implement least privilege principle
+- Use AWS Organizations for account management
+- Enable AWS CloudTrail for audit logging
+- Implement AWS WAF for API protection
+- Regular security assessments and audits
+
+## 📈 Scalability Considerations and Best Practices
+
+### Architecture
+- Use AWS Organizations for centralized account management
+- Implement AWS Control Tower for governance
+- Deploy Ansible control host with auto-scaling
+- Use AWS Systems Manager for automation
+- Implement metric aggregation at source
+
+### Performance
+- Use CloudWatch Contributor Insights
+- Implement caching for frequently accessed data
+- Use metric math for efficient aggregation
+- Set up proper retention policies
+- Implement parallel processing where possible
+
+
+## 🛡️ Resiliency Considerations and Best Practices
+
+### High Availability
+- Deploy Ansible control host across multiple AZs
+- Implement retry mechanisms for failed operations
+- Use circuit breakers for API calls
+- Implement proper error handling
+- Use AWS Systems Manager for automation
+
+### Disaster Recovery
+- Implement backup of Ansible configurations
+- Set up cross-region metric replication
+- Create recovery playbooks
+- Implement automated testing
+- Regular disaster recovery drills
+
+### Monitoring and Alerting
+- Set up CloudWatch dashboards for solution health
+- Implement synthetic monitoring
+- Add custom metrics for solution performance
+- Set up proper alerting thresholds
+- Regular performance testing
 
 ## 🛠️ Adding New AWS Accounts
 
@@ -125,9 +170,6 @@ account_4:
 2. Set corresponding environment variables
 3. Run the monitoring setup script
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🤝 Contributing
 
