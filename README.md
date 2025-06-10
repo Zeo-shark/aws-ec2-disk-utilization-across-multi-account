@@ -24,7 +24,7 @@ This repository provides a resilient, secure, and scalable solution to monitor d
 - AWS CLI configured with appropriate permissions
 - Ansible 2.12+ installed
 - Python 3.8+ with boto3
-- Terraform 1.0+ (optional)
+- ansible control host configured in the management account
 
 ## Repository Structure
 
