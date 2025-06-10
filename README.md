@@ -1,27 +1,43 @@
 # aws-ec2-disk-utilization-across-multi-account
 
-Case: Multi-Account AWS EC2 Disk Utilization Monitoring
 
-### Background:
-You are a Solutions architect at a large enterprise that utilizes AWS cloud services. The
-company has grown through acquisitions and now manages 3 separate AWS accounts,
-each containing numerous EC2 instances. The CTO has expressed concerns about
-potential disk space issues across these instances and wants a comprehensive solution
-to monitor disk utilization.
 
-### Assignment:
-Company is internally using a configuration management tool (Ansible). Before investing
-into other tools, the company has decided to use Ansible to perform the required
-metric collection.
-Design and outline a solution to fetch and report disk utilization from all EC2 instances
-across the 3 AWS accounts. Your solution should address the following points:
-1. How would you centralize access and management of the 3 AWS accounts?
-2. How would you aggregate the collected data from all accounts into a single, easily
-digestible format?
-3. How would your solution scale if the company acquires more companies and AWS
-accounts in the future?
 
-### Deliverables :
-- Provide a high-level architectural diagram of your proposed solution.
-- Provide the ansible playbook
-- Summarize the various component involved in the process
+## Overview
+
+This repository provides a resilient, secure, and scalable solution to monitor disk utilization across multiple AWS accounts using Ansible. It leverages AWS Organizations for centralized account management, cross-account IAM roles for secure access, and stores aggregated metrics in S3 for visualization.
+
+![docs\diagrams\cross-account-ec2-monitoring.drawio.png](docs\diagrams\cross-account-ec2-monitoring.drawio.png)
+
+**Highlights:**
+- Centralized AWS account management with AWS Organizations
+- Secure cross-account access using IAM roles
+- Automated disk utilization collection via Ansible playbooks
+- Central metrics storage in an encrypted S3 bucket
+- Visualization support through Amazon QuickSight or Grafana
+
+## Repository Structure
+
+```plaintext
+multi-account-ec2-disk-monitoring/
+├── ansible/
+│   ├── inventories/            # Grouped AWS accounts inventories
+│   │   ├── prod_accounts.yml
+│   │   └── staging_accounts.yml
+│   ├── playbooks/              # Main playbooks
+│   │   └── gather_disk_metrics.yml
+│   ├── roles/                  # Reusable Ansible roles
+│   │   ├── common/
+│   │   ├── aws_credentials/
+│   │   └── ec2_disk_monitor/
+│   └── ansible.cfg             # Ansible configuration
+├── docs/
+│   ├── diagrams/               # Architecture and flow diagrams
+│   │   └── architecture.png
+│   └── implementation_steps.md # Detailed setup instructions
+├── .github/
+│   └── workflows/              # CI/CD pipelines
+│       └── ansible-lint.yml
+├── README.md                   # This file
+└── LICENSE                     # License information
+```

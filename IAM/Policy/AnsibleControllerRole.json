@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": [
+        "arn:aws:iam::<AccountID1>:role/AnsibleDiskMonitorRole",
+        "arn:aws:iam::<AccountID2>:role/AnsibleDiskMonitorRole",
+        "arn:aws:iam::<AccountID3>:role/AnsibleDiskMonitorRole"
+      ]
+    }
+  ]
+}

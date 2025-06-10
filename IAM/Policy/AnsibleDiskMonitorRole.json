@@ -1,0 +1,13 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::<ManagementAccountID>:AnsibleControllerRole" // Or specific role/user ARN in Management Account
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {} // Optional: Add conditions like ExternalId for enhanced security if you have external identities
+    }
+  ]
+}
