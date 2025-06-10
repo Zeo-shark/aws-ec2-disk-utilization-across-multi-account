@@ -1,0 +1,72 @@
+---
+- name: Monitor Disk Utilization Across AWS Accounts
+  hosts: aws_accounts
+  gather_facts: true
+  become: true
+  vars:
+    namespace: "EC2/DiskUtilization"
+    timestamp: "{{ ansible_date_time.iso8601 }}"
+    threshold_warning: 80
+    threshold_critical: 90
+
+  tasks:
+    - name: Get disk utilization
+      shell: df -h
+      register: disk_usage
+      changed_when: false
+
+    - name: Parse disk utilization
+      set_fact:
+        disk_data: "{{ disk_usage.stdout_lines | map('regex_search', '^/dev/.*') | select('string') | map('regex_replace', '^/dev/([^ ]+)\\s+([0-9]+)G\\s+([0-9]+)G\\s+([0-9]+)G\\s+([0-9]+)%\\s+(/.*)$', '{\"device\": \"\\1\", \"size\": \"\\2\", \"used\": \"\\3\", \"available\": \"\\4\", \"use_percent\": \"\\5\", \"mount\": \"\\6\"}') | list }}"
+
+    - name: Install AWS CLI
+      package:
+        name: awscli
+        state: present
+      when: ansible_os_family == "Debian" or ansible_os_family == "RedHat"
+
+    - name: Send metrics to CloudWatch
+      shell: |
+        aws cloudwatch put-metric-data \
+          --namespace "{{ namespace }}" \
+          --metric-name "DiskUsagePercent" \
+          --value {{ item.use_percent }} \
+          --unit Percent \
+          --dimensions InstanceId={{ ansible_ec2_instance_id }},MountPoint={{ item.mount }},Device={{ item.device }} \
+          --timestamp "{{ timestamp }}"
+      loop: "{{ disk_data }}"
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
+        AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"
+        AWS_DEFAULT_REGION: "{{ ansible_ec2_placement_region }}"
+      ignore_errors: true
+
+    - name: Send available space metric to CloudWatch
+      shell: |
+        aws cloudwatch put-metric-data \
+          --namespace "{{ namespace }}" \
+          --metric-name "AvailableDiskSpace" \
+          --value {{ item.available }} \
+          --unit Gigabytes \
+          --dimensions InstanceId={{ ansible_ec2_instance_id }},MountPoint={{ item.mount }},Device={{ item.device }} \
+          --timestamp "{{ timestamp }}"
+      loop: "{{ disk_data }}"
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
+        AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"
+        AWS_DEFAULT_REGION: "{{ ansible_ec2_placement_region }}"
+      ignore_errors: true
+
+    - name: Check for critical disk usage
+      fail:
+        msg: "Critical disk usage detected on {{ inventory_hostname }} - {{ item.mount }} is {{ item.use_percent }}% used"
+      when: item.use_percent | int >= threshold_critical
+      loop: "{{ disk_data }}"
+      ignore_errors: true
+
+    - name: Check for warning disk usage
+      debug:
+        msg: "Warning: {{ item.mount }} on {{ inventory_hostname }} is {{ item.use_percent }}% used"
+      when: item.use_percent | int >= threshold_warning and item.use_percent | int < threshold_critical
+      loop: "{{ disk_data }}"
+      ignore_errors: true 

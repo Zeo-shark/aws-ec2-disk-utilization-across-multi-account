@@ -1,0 +1,20 @@
+---
+all:
+  children:
+    aws_accounts:
+      children:
+        account_1:
+          vars:
+            aws_account_id: "{{ lookup('env', 'AWS_ACCOUNT_1_ID') }}"
+            aws_access_key: "{{ lookup('env', 'AWS_ACCOUNT_1_ACCESS_KEY') }}"
+            aws_secret_key: "{{ lookup('env', 'AWS_ACCOUNT_1_SECRET_KEY') }}"
+        account_2:
+          vars:
+            aws_account_id: "{{ lookup('env', 'AWS_ACCOUNT_2_ID') }}"
+            aws_access_key: "{{ lookup('env', 'AWS_ACCOUNT_2_ACCESS_KEY') }}"
+            aws_secret_key: "{{ lookup('env', 'AWS_ACCOUNT_2_SECRET_KEY') }}"
+        account_3:
+          vars:
+            aws_account_id: "{{ lookup('env', 'AWS_ACCOUNT_3_ID') }}"
+            aws_access_key: "{{ lookup('env', 'AWS_ACCOUNT_3_ACCESS_KEY') }}"
+            aws_secret_key: "{{ lookup('env', 'AWS_ACCOUNT_3_SECRET_KEY') }}" 
