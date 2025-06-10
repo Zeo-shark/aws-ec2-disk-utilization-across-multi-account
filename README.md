@@ -7,7 +7,7 @@
 
 This repository provides a resilient, secure, and scalable solution to monitor disk utilization across multiple AWS accounts using Ansible. It leverages AWS Organizations for centralized account management, cross-account IAM roles for secure access, and stores aggregated metrics in S3 for visualization.
 
-![./docs\diagrams\cross-account-ec2-monitoring.drawio.png](./docs\diagrams\cross-account-ec2-monitoring.drawio.png)
+![./docs/diagrams/cross-account-ec2-monitoring.drawio.png](./docs/diagrams/cross-account-ec2-monitoring.drawio.png)
 
 ## Features
 
