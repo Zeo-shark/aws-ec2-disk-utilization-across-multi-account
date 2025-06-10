@@ -4,7 +4,19 @@
 [![Python 3.x](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/downloads/)
 [![Ansible](https://img.shields.io/badge/Ansible-2.9+-green.svg)](https://www.ansible.com/)
 
-A comprehensive solution for monitoring disk utilization across multiple AWS accounts using Ansible and AWS CloudWatch. This solution provides real-time monitoring, automated alerts, and centralized dashboards for disk space management across your AWS infrastructure.
+## Overview
+
+This repository provides a resilient, secure, and scalable solution to monitor disk utilization across multiple AWS accounts using Ansible. It leverages AWS Organizations for centralized account management, cross-account IAM roles for secure access, and stores aggregated metrics in S3 for visualization.
+
+![./docs/diagrams/cross-account-ec2-monitoring.drawio.png](./docs/diagrams/cross-account-ec2-monitoring.drawio.png)
+
+## Quick Start
+
+### Prerequisites
+- AWS CLI configured with appropriate permissions
+- Ansible 2.12+ installed
+- Python 3.8+ with boto3
+- ansible control host configured in the management account
 
 ## 🌟 Features
 
