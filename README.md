@@ -96,6 +96,9 @@ The solution provides:
 
 ## 🔐 Security Considerations and Best Practices
 
+### Network Security
+The Ansible controller host should be connecting privately to the target ec2 instances using VPC Peering (regional/global)
+
 ### Credential Management
 - Use AWS Secrets Manager or Parameter Store instead of environment variables
 - Implement automatic credential rotation
